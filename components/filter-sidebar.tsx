@@ -1,55 +1,72 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { X } from "lucide-react"
-import { Slider } from "@/components/ui/slider"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
+import { useState } from "react";
+import { X } from "lucide-react";
+import { Slider } from "@/components/ui/slider";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 
 interface FilterSidebarProps {
-  isOpen: boolean
-  onClose: () => void
-  totalResults: number
+  isOpen: boolean;
+  onClose: () => void;
+  totalResults: number;
 }
 
-export default function FilterSidebar({ isOpen, onClose, totalResults }: FilterSidebarProps) {
-  const [priceRange, setPriceRange] = useState([233, 667])
-  const [selectedBrands, setSelectedBrands] = useState<string[]>(["Apple"])
+export default function FilterSidebar({
+  isOpen,
+  onClose,
+  totalResults,
+}: FilterSidebarProps) {
+  const [priceRange, setPriceRange] = useState([233, 667]);
+  const [selectedBrands, setSelectedBrands] = useState<string[]>(["Apple"]);
 
   const brands = [
     { id: "apple", name: "Apple" },
     { id: "samsung", name: "Samsung" },
     { id: "xiaomi", name: "Xiaomi" },
     { id: "raketa", name: "Raketa" },
-  ]
+  ];
 
   const handleBrandChange = (brand: string, checked: boolean) => {
     if (checked) {
-      setSelectedBrands([...selectedBrands, brand])
+      setSelectedBrands([...selectedBrands, brand]);
     } else {
-      setSelectedBrands(selectedBrands.filter((b) => b !== brand))
+      setSelectedBrands(selectedBrands.filter((b) => b !== brand));
     }
-  }
+  };
 
   const handlePriceChange = (value: number[]) => {
-    setPriceRange(value)
-  }
+    setPriceRange(value);
+  };
 
   const clearFilters = () => {
-    setPriceRange([233, 667])
-    setSelectedBrands([])
-  }
+    setPriceRange([233, 667]);
+    setSelectedBrands([]);
+  };
 
-  if (!isOpen) return null
+  if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-start justify-start" onClick={onClose}>
-      <div className="bg-white h-full w-full max-w-xs overflow-y-auto shadow-lg" onClick={(e) => e.stopPropagation()}>
+    <div
+      className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-start justify-start"
+      onClick={onClose}
+    >
+      <div
+        className="bg-white h-full w-full max-w-xs overflow-y-auto shadow-lg"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="p-4 border-b flex items-center justify-between">
           <h2 className="font-bold text-lg">Filter</h2>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
+          <button
+            onClick={onClose}
+            className="text-gray-500 hover:text-gray-700"
+          >
             <X className="h-5 w-5" />
           </button>
         </div>
@@ -112,7 +129,11 @@ export default function FilterSidebar({ isOpen, onClose, totalResults }: FilterS
             <CollapsibleContent>
               <div className="mb-4">
                 <div className="relative mb-4">
-                  <Input type="text" placeholder="Hľadať" className="pl-8 h-9" />
+                  <Input
+                    type="text"
+                    placeholder="Hľadať"
+                    className="pl-8 h-9"
+                  />
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -135,7 +156,9 @@ export default function FilterSidebar({ isOpen, onClose, totalResults }: FilterS
                       <Checkbox
                         id={brand.id}
                         checked={selectedBrands.includes(brand.name)}
-                        onCheckedChange={(checked) => handleBrandChange(brand.name, checked as boolean)}
+                        onCheckedChange={(checked) =>
+                          handleBrandChange(brand.name, checked as boolean)
+                        }
                       />
                       <label
                         htmlFor={brand.id}
@@ -169,7 +192,9 @@ export default function FilterSidebar({ isOpen, onClose, totalResults }: FilterS
               </svg>
             </CollapsibleTrigger>
             <CollapsibleContent>
-              <div className="mb-4">{/* Device filter content would go here */}</div>
+              <div className="mb-4">
+                {/* Device filter content would go here */}
+              </div>
             </CollapsibleContent>
           </Collapsible>
 
@@ -192,18 +217,26 @@ export default function FilterSidebar({ isOpen, onClose, totalResults }: FilterS
               </svg>
             </CollapsibleTrigger>
             <CollapsibleContent>
-              <div className="mb-4">{/* Model filter content would go here */}</div>
+              <div className="mb-4">
+                {/* Model filter content would go here */}
+              </div>
             </CollapsibleContent>
           </Collapsible>
         </div>
 
         <div className="p-4 border-t flex items-center justify-between">
-          <Button variant="ghost" className="text-gray-500 hover:text-gray-700 p-0 h-auto" onClick={clearFilters}>
+          <Button
+            variant="ghost"
+            className="text-gray-500 hover:text-gray-700 p-0 h-auto"
+            onClick={clearFilters}
+          >
             Vymazať filter
           </Button>
-          <div className="bg-black text-white px-3 py-1.5 text-sm font-medium rounded">{totalResults} výsledkov</div>
+          <div className="bg-black text-white px-3 py-1.5 text-sm font-medium rounded">
+            {totalResults} výsledkov
+          </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
